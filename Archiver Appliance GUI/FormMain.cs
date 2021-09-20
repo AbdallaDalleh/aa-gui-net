@@ -9,6 +9,11 @@ namespace Archiver_Appliance_GUI
 {
     public partial class FormMain : Form
     {
+        const string RequestPVsList = "http://10.1.100.9:17665/mgmt/bpl/getAllPVs?limit=-1";
+
+        HttpWebRequest request;
+        HttpWebResponse response;
+
         public FormMain()
         {
             InitializeComponent();
@@ -17,14 +22,40 @@ namespace Archiver_Appliance_GUI
         private void FormMain_Load(object sender, EventArgs e)
         {
             listBuffer.Sorted = true;
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create("http://10.1.100.9:17665/mgmt/bpl/getAllPVs?limit=-1");
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            listBuffer.SelectionMode = SelectionMode.MultiSimple;
+            listData.SelectionMode = SelectionMode.MultiSimple;
+
+            request = (HttpWebRequest) WebRequest.Create(RequestPVsList);
+            response = (HttpWebResponse)request.GetResponse();
             String content = new StreamReader(response.GetResponseStream()).ReadToEnd();
             List<String> list = JsonSerializer.Deserialize<List<String>>(content);
             foreach (String item in list)
             {
                 listBuffer.Items.Add(item);
             }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            listData.Items.Add(listBuffer.SelectedItem);
+        }
+
+        private void btnAddAll_Click(object sender, EventArgs e)
+        {
+            foreach (var item in listBuffer.SelectedItems)
+            {
+                listData.Items.Add(item);
+            }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            listData.Items.Remove(listData.SelectedItem);
+        }
+
+        private void btnRemoveAll_Click(object sender, EventArgs e)
+        {
+            listData.Items.Clear();
         }
     }
 }

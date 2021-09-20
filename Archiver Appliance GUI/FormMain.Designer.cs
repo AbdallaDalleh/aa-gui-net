@@ -40,7 +40,6 @@ namespace Archiver_Appliance_GUI
             this.label1 = new System.Windows.Forms.Label();
             this.txtTemplate = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.cbDefault = new System.Windows.Forms.CheckBox();
             this.btnLoadTemplate = new System.Windows.Forms.Button();
             this.btnSaveTemplate = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -103,6 +102,7 @@ namespace Archiver_Appliance_GUI
             this.btnAdd.TabIndex = 3;
             this.btnAdd.Text = ">";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnAddAll
             // 
@@ -112,6 +112,7 @@ namespace Archiver_Appliance_GUI
             this.btnAddAll.TabIndex = 4;
             this.btnAddAll.Text = ">>";
             this.btnAddAll.UseVisualStyleBackColor = true;
+            this.btnAddAll.Click += new System.EventHandler(this.btnAddAll_Click);
             // 
             // btnRemove
             // 
@@ -121,6 +122,7 @@ namespace Archiver_Appliance_GUI
             this.btnRemove.TabIndex = 5;
             this.btnRemove.Text = "<";
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnRemoveAll
             // 
@@ -130,6 +132,7 @@ namespace Archiver_Appliance_GUI
             this.btnRemoveAll.TabIndex = 6;
             this.btnRemoveAll.Text = "<<";
             this.btnRemoveAll.UseVisualStyleBackColor = true;
+            this.btnRemoveAll.Click += new System.EventHandler(this.btnRemoveAll_Click);
             // 
             // txtSearch
             // 
@@ -149,29 +152,19 @@ namespace Archiver_Appliance_GUI
             // 
             // txtTemplate
             // 
-            this.txtTemplate.Location = new System.Drawing.Point(658, 323);
+            this.txtTemplate.Location = new System.Drawing.Point(565, 323);
             this.txtTemplate.Name = "txtTemplate";
-            this.txtTemplate.Size = new System.Drawing.Size(118, 23);
+            this.txtTemplate.Size = new System.Drawing.Size(211, 23);
             this.txtTemplate.TabIndex = 9;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(562, 326);
+            this.label2.Location = new System.Drawing.Point(469, 326);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(90, 15);
             this.label2.TabIndex = 10;
             this.label2.Text = "Template Name";
-            // 
-            // cbDefault
-            // 
-            this.cbDefault.AutoSize = true;
-            this.cbDefault.Location = new System.Drawing.Point(661, 351);
-            this.cbDefault.Name = "cbDefault";
-            this.cbDefault.Size = new System.Drawing.Size(115, 19);
-            this.cbDefault.TabIndex = 11;
-            this.cbDefault.Text = "Default Directory";
-            this.cbDefault.UseVisualStyleBackColor = true;
             // 
             // btnLoadTemplate
             // 
@@ -400,7 +393,6 @@ namespace Archiver_Appliance_GUI
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSaveTemplate);
             this.Controls.Add(this.btnLoadTemplate);
-            this.Controls.Add(this.cbDefault);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtTemplate);
             this.Controls.Add(this.label1);
@@ -438,7 +430,6 @@ namespace Archiver_Appliance_GUI
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtTemplate;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox cbDefault;
         private System.Windows.Forms.Button btnLoadTemplate;
         private System.Windows.Forms.Button btnSaveTemplate;
         private System.Windows.Forms.Button button1;
