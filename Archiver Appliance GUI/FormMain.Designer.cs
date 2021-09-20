@@ -62,6 +62,7 @@ namespace Archiver_Appliance_GUI
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnNow = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -159,6 +160,7 @@ namespace Archiver_Appliance_GUI
             this.btnLoadTemplate.TabIndex = 12;
             this.btnLoadTemplate.Text = "Load Template";
             this.btnLoadTemplate.UseVisualStyleBackColor = true;
+            this.btnLoadTemplate.Click += new System.EventHandler(this.btnLoadTemplate_Click);
             // 
             // btnSaveTemplate
             // 
@@ -208,7 +210,7 @@ namespace Archiver_Appliance_GUI
             // 
             this.dtFrom.Location = new System.Drawing.Point(54, 426);
             this.dtFrom.Name = "dtFrom";
-            this.dtFrom.Size = new System.Drawing.Size(144, 23);
+            this.dtFrom.Size = new System.Drawing.Size(162, 23);
             this.dtFrom.TabIndex = 18;
             // 
             // label3
@@ -233,7 +235,7 @@ namespace Archiver_Appliance_GUI
             // 
             this.dtTo.Location = new System.Drawing.Point(256, 426);
             this.dtTo.Name = "dtTo";
-            this.dtTo.Size = new System.Drawing.Size(144, 23);
+            this.dtTo.Size = new System.Drawing.Size(162, 23);
             this.dtTo.TabIndex = 20;
             // 
             // radioButton1
@@ -361,7 +363,7 @@ namespace Archiver_Appliance_GUI
             // 
             // btnNow
             // 
-            this.btnNow.Location = new System.Drawing.Point(406, 426);
+            this.btnNow.Location = new System.Drawing.Point(439, 426);
             this.btnNow.Name = "btnNow";
             this.btnNow.Size = new System.Drawing.Size(57, 23);
             this.btnNow.TabIndex = 31;
@@ -446,6 +448,7 @@ namespace Archiver_Appliance_GUI
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button btnNow;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
 

@@ -26,12 +26,14 @@ namespace Archiver_Appliance_GUI
             listData.SelectionMode = SelectionMode.MultiSimple;
             dtFrom.Value = DateTime.Now.AddHours(-1);
             dtFrom.Format = DateTimePickerFormat.Custom;
-            dtFrom.CustomFormat = "hh:mm:ss dd/MM/yyyy";
+            dtFrom.CustomFormat = "hh:mm:ss dd/MM/yyyy tt";
             dtTo.Value = DateTime.Now;
             dtTo.Format = DateTimePickerFormat.Custom;
-            dtTo.CustomFormat = "hh:mm:ss dd/MM/yyyy";
+            dtTo.CustomFormat = "hh:mm:ss dd/MM/yyyy tt";
             saveFileDialog.Filter = "AA Templates|*.aat";
             saveFileDialog.Title = "Save AA template";
+            openFileDialog.Filter = "AA Templates|*.aat";
+            openFileDialog.Title = "Load AA Template";
 
             btnNow.Click += (object s, EventArgs e) => dtTo.Value = DateTime.Now;
             FetchPVs();
@@ -99,8 +101,8 @@ namespace Archiver_Appliance_GUI
                 {
                     template.WriteLine("pv " + item.ToString());
                 }
-                template.WriteLine("from " + dtFrom.Value.ToString("hh:mm:ss_dd/MM/yyyy"));
-                template.WriteLine("to " + dtTo.Value.ToString("hh:mm:ss_dd/MM/yyyy"));
+                template.WriteLine("from " + dtFrom.Value.ToUniversalTime().ToString("yyyy-MM-ddThh:mm:ss.fffZ"));
+                template.WriteLine("to " + dtTo.Value.ToUniversalTime().ToString("yyyy-MM-ddThh:mm:ss.fffZ"));
                 template.Close();
 
                 MessageBox.Show("Template " + saveFileDialog.FileName + " saved successfulyl", "Save Template", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -109,6 +111,33 @@ namespace Archiver_Appliance_GUI
             {
                 MessageBox.Show("Filename was not selected. Template was not saved", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+        }
+
+        private void btnLoadTemplate_Click(object sender, EventArgs e)
+        {
+            openFileDialog.ShowDialog();
+            if(openFileDialog.FileName != String.Empty)
+            {
+                StreamReader template = new StreamReader(openFileDialog.FileName);
+                while(template.Peek() != -1)
+                {
+                    string line = template.ReadLine();
+                    string[] items = line.Split(' ');
+                    if (items[0] == "pv")
+                        listData.Items.Add(items[1]);
+                    else if (items[0] == "from")
+                        dtFrom.Value = DateTime.Parse(items[1]).ToLocalTime();
+                    else if(items[0] == "to")
+                        dtTo.Value = DateTime.Parse(items[1]).ToLocalTime();
+                    else
+                    {
+                        MessageBox.Show("Invalid configuration", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        template.Close();
+                    }
+                }
+
+                template.Close();
             }
         }
     }
