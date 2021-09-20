@@ -24,15 +24,17 @@ namespace Archiver_Appliance_GUI
             listBuffer.Sorted = true;
             listBuffer.SelectionMode = SelectionMode.MultiSimple;
             listData.SelectionMode = SelectionMode.MultiSimple;
+            dtFrom.Value = DateTime.Now.AddHours(-1);
+            dtFrom.Format = DateTimePickerFormat.Custom;
+            dtFrom.CustomFormat = "hh:mm:ss dd/MM/yyyy";
+            dtTo.Value = DateTime.Now;
+            dtTo.Format = DateTimePickerFormat.Custom;
+            dtTo.CustomFormat = "hh:mm:ss dd/MM/yyyy";
+            saveFileDialog.Filter = "AA Templates|*.aat";
+            saveFileDialog.Title = "Save AA template";
 
-            request = (HttpWebRequest) WebRequest.Create(RequestPVsList);
-            response = (HttpWebResponse)request.GetResponse();
-            String content = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            List<String> list = JsonSerializer.Deserialize<List<String>>(content);
-            foreach (String item in list)
-            {
-                listBuffer.Items.Add(item);
-            }
+            btnNow.Click += (object s, EventArgs e) => dtTo.Value = DateTime.Now;
+            FetchPVs();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -56,6 +58,58 @@ namespace Archiver_Appliance_GUI
         private void btnRemoveAll_Click(object sender, EventArgs e)
         {
             listData.Items.Clear();
+        }
+
+        private void btnFetch_Click(object sender, EventArgs e)
+        {
+            FetchPVs();
+        }
+
+        private void FetchPVs()
+        {
+            listBuffer.Items.Clear();
+            request = (HttpWebRequest)WebRequest.Create(RequestPVsList);
+            response = (HttpWebResponse)request.GetResponse();
+            String content = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            List<String> list = JsonSerializer.Deserialize<List<String>>(content);
+            foreach (String item in list)
+            {
+                listBuffer.Items.Add(item);
+            }
+        }
+
+        private void btnSaveTemplate_Click(object sender, EventArgs e)
+        {
+            if(listData.Items.Count <= 0)
+            {
+                MessageBox.Show("Empty PVs List", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if(dtFrom.Value.Ticks >= dtTo.Value.Ticks)
+            {
+                MessageBox.Show("Invalid start/end timestamps", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            saveFileDialog.ShowDialog();
+            if(saveFileDialog.FileName != String.Empty)
+            {
+                StreamWriter template = new StreamWriter(saveFileDialog.FileName);
+                foreach (var item in listData.Items)
+                {
+                    template.WriteLine("pv " + item.ToString());
+                }
+                template.WriteLine("from " + dtFrom.Value.ToString("hh:mm:ss_dd/MM/yyyy"));
+                template.WriteLine("to " + dtTo.Value.ToString("hh:mm:ss_dd/MM/yyyy"));
+                template.Close();
+
+                MessageBox.Show("Template " + saveFileDialog.FileName + " saved successfulyl", "Save Template", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Filename was not selected. Template was not saved", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }
     }
 }

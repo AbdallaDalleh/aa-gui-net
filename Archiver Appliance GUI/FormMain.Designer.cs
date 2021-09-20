@@ -38,8 +38,6 @@ namespace Archiver_Appliance_GUI
             this.btnRemoveAll = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtTemplate = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnLoadTemplate = new System.Windows.Forms.Button();
             this.btnSaveTemplate = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -49,7 +47,7 @@ namespace Archiver_Appliance_GUI
             this.dtFrom = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtTo = new System.Windows.Forms.DateTimePicker();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
@@ -62,6 +60,8 @@ namespace Archiver_Appliance_GUI
             this.label5 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.btnNow = new System.Windows.Forms.Button();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -82,7 +82,7 @@ namespace Archiver_Appliance_GUI
             this.listData.ItemHeight = 15;
             this.listData.Location = new System.Drawing.Point(469, 12);
             this.listData.Name = "listData";
-            this.listData.Size = new System.Drawing.Size(307, 304);
+            this.listData.Size = new System.Drawing.Size(307, 334);
             this.listData.TabIndex = 1;
             // 
             // btnFetch
@@ -93,6 +93,7 @@ namespace Archiver_Appliance_GUI
             this.btnFetch.TabIndex = 2;
             this.btnFetch.Text = "Fetch PVs";
             this.btnFetch.UseVisualStyleBackColor = true;
+            this.btnFetch.Click += new System.EventHandler(this.btnFetch_Click);
             // 
             // btnAdd
             // 
@@ -150,25 +151,9 @@ namespace Archiver_Appliance_GUI
             this.label1.TabIndex = 8;
             this.label1.Text = "Search";
             // 
-            // txtTemplate
-            // 
-            this.txtTemplate.Location = new System.Drawing.Point(565, 323);
-            this.txtTemplate.Name = "txtTemplate";
-            this.txtTemplate.Size = new System.Drawing.Size(211, 23);
-            this.txtTemplate.TabIndex = 9;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(469, 326);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 15);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Template Name";
-            // 
             // btnLoadTemplate
             // 
-            this.btnLoadTemplate.Location = new System.Drawing.Point(658, 387);
+            this.btnLoadTemplate.Location = new System.Drawing.Point(658, 354);
             this.btnLoadTemplate.Name = "btnLoadTemplate";
             this.btnLoadTemplate.Size = new System.Drawing.Size(118, 38);
             this.btnLoadTemplate.TabIndex = 12;
@@ -177,16 +162,17 @@ namespace Archiver_Appliance_GUI
             // 
             // btnSaveTemplate
             // 
-            this.btnSaveTemplate.Location = new System.Drawing.Point(534, 387);
+            this.btnSaveTemplate.Location = new System.Drawing.Point(534, 354);
             this.btnSaveTemplate.Name = "btnSaveTemplate";
             this.btnSaveTemplate.Size = new System.Drawing.Size(118, 38);
             this.btnSaveTemplate.TabIndex = 13;
             this.btnSaveTemplate.Text = "Save Template";
             this.btnSaveTemplate.UseVisualStyleBackColor = true;
+            this.btnSaveTemplate.Click += new System.EventHandler(this.btnSaveTemplate_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(696, 431);
+            this.button1.Location = new System.Drawing.Point(696, 398);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(80, 38);
             this.button1.TabIndex = 14;
@@ -195,7 +181,7 @@ namespace Archiver_Appliance_GUI
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(608, 431);
+            this.button2.Location = new System.Drawing.Point(608, 398);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(82, 38);
             this.button2.TabIndex = 15;
@@ -204,7 +190,7 @@ namespace Archiver_Appliance_GUI
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(534, 431);
+            this.button3.Location = new System.Drawing.Point(534, 398);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(68, 38);
             this.button3.TabIndex = 16;
@@ -213,16 +199,16 @@ namespace Archiver_Appliance_GUI
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(10, 484);
+            this.progressBar1.Location = new System.Drawing.Point(14, 466);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(766, 23);
+            this.progressBar1.Size = new System.Drawing.Size(762, 23);
             this.progressBar1.TabIndex = 17;
             // 
             // dtFrom
             // 
             this.dtFrom.Location = new System.Drawing.Point(54, 426);
             this.dtFrom.Name = "dtFrom";
-            this.dtFrom.Size = new System.Drawing.Size(200, 23);
+            this.dtFrom.Size = new System.Drawing.Size(144, 23);
             this.dtFrom.TabIndex = 18;
             // 
             // label3
@@ -237,18 +223,18 @@ namespace Archiver_Appliance_GUI
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 461);
+            this.label4.Location = new System.Drawing.Point(231, 432);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(19, 15);
             this.label4.TabIndex = 21;
             this.label4.Text = "To";
             // 
-            // dateTimePicker1
+            // dtTo
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(54, 455);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 23);
-            this.dateTimePicker1.TabIndex = 20;
+            this.dtTo.Location = new System.Drawing.Point(256, 426);
+            this.dtTo.Name = "dtTo";
+            this.dtTo.Size = new System.Drawing.Size(144, 23);
+            this.dtTo.TabIndex = 20;
             // 
             // radioButton1
             // 
@@ -373,18 +359,28 @@ namespace Archiver_Appliance_GUI
             this.comboBox1.Size = new System.Drawing.Size(92, 23);
             this.comboBox1.TabIndex = 30;
             // 
+            // btnNow
+            // 
+            this.btnNow.Location = new System.Drawing.Point(406, 426);
+            this.btnNow.Name = "btnNow";
+            this.btnNow.Size = new System.Drawing.Size(57, 23);
+            this.btnNow.TabIndex = 31;
+            this.btnNow.Text = "Now";
+            this.btnNow.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(786, 517);
+            this.ClientSize = new System.Drawing.Size(786, 501);
+            this.Controls.Add(this.btnNow);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dtTo);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dtFrom);
             this.Controls.Add(this.progressBar1);
@@ -393,8 +389,6 @@ namespace Archiver_Appliance_GUI
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSaveTemplate);
             this.Controls.Add(this.btnLoadTemplate);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtTemplate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.btnRemoveAll);
@@ -428,8 +422,6 @@ namespace Archiver_Appliance_GUI
         private System.Windows.Forms.Button btnRemoveAll;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtTemplate;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnLoadTemplate;
         private System.Windows.Forms.Button btnSaveTemplate;
         private System.Windows.Forms.Button button1;
@@ -439,7 +431,7 @@ namespace Archiver_Appliance_GUI
         private System.Windows.Forms.DateTimePicker dtFrom;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtTo;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;
@@ -452,6 +444,8 @@ namespace Archiver_Appliance_GUI
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button btnNow;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 
