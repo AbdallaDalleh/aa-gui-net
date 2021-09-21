@@ -36,34 +36,19 @@ namespace Archiver_Appliance_GUI
             openFileDialog.Title = "Load AA Template";
 
             btnNow.Click += (object s, EventArgs e) => dtTo.Value = DateTime.Now;
-            FetchPVs();
-        }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            listData.Items.Add(listBuffer.SelectedItem);
-        }
-
-        private void btnAddAll_Click(object sender, EventArgs e)
-        {
-            foreach (var item in listBuffer.SelectedItems)
+            btnAdd.Click += (object s, EventArgs e) => listData.Items.Add(listBuffer.SelectedItem);
+            btnFetch.Click += (object s, EventArgs e) => FetchPVs();
+            btnRemove.Click += (object s, EventArgs e) => listData.Items.Remove(listData.SelectedItem);
+            btnRemoveAll.Click += (object s, EventArgs e) => listData.Items.Clear();
+            btnAddAll.Click += (object s, EventArgs e) =>
             {
-                listData.Items.Add(item);
-            }
-        }
+                foreach (var item in listBuffer.SelectedItems)
+                {
+                    if(!listData.Items.Contains(item))
+                        listData.Items.Add(item);
+                }
+            };
 
-        private void btnRemove_Click(object sender, EventArgs e)
-        {
-            listData.Items.Remove(listData.SelectedItem);
-        }
-
-        private void btnRemoveAll_Click(object sender, EventArgs e)
-        {
-            listData.Items.Clear();
-        }
-
-        private void btnFetch_Click(object sender, EventArgs e)
-        {
             FetchPVs();
         }
 
@@ -139,6 +124,11 @@ namespace Archiver_Appliance_GUI
 
                 template.Close();
             }
+        }
+
+        private void btnExportCSV_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

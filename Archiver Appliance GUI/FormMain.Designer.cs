@@ -41,7 +41,7 @@ namespace Archiver_Appliance_GUI
             this.btnLoadTemplate = new System.Windows.Forms.Button();
             this.btnSaveTemplate = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnExportCSV = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.dtFrom = new System.Windows.Forms.DateTimePicker();
@@ -94,7 +94,6 @@ namespace Archiver_Appliance_GUI
             this.btnFetch.TabIndex = 2;
             this.btnFetch.Text = "Fetch PVs";
             this.btnFetch.UseVisualStyleBackColor = true;
-            this.btnFetch.Click += new System.EventHandler(this.btnFetch_Click);
             // 
             // btnAdd
             // 
@@ -104,7 +103,6 @@ namespace Archiver_Appliance_GUI
             this.btnAdd.TabIndex = 3;
             this.btnAdd.Text = ">";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnAddAll
             // 
@@ -114,7 +112,6 @@ namespace Archiver_Appliance_GUI
             this.btnAddAll.TabIndex = 4;
             this.btnAddAll.Text = ">>";
             this.btnAddAll.UseVisualStyleBackColor = true;
-            this.btnAddAll.Click += new System.EventHandler(this.btnAddAll_Click);
             // 
             // btnRemove
             // 
@@ -124,7 +121,6 @@ namespace Archiver_Appliance_GUI
             this.btnRemove.TabIndex = 5;
             this.btnRemove.Text = "<";
             this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnRemoveAll
             // 
@@ -134,7 +130,6 @@ namespace Archiver_Appliance_GUI
             this.btnRemoveAll.TabIndex = 6;
             this.btnRemoveAll.Text = "<<";
             this.btnRemoveAll.UseVisualStyleBackColor = true;
-            this.btnRemoveAll.Click += new System.EventHandler(this.btnRemoveAll_Click);
             // 
             // txtSearch
             // 
@@ -181,14 +176,15 @@ namespace Archiver_Appliance_GUI
             this.button1.Text = "Export MAT";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnExportCSV
             // 
-            this.button2.Location = new System.Drawing.Point(608, 398);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(82, 38);
-            this.button2.TabIndex = 15;
-            this.button2.Text = "Export CSV";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnExportCSV.Location = new System.Drawing.Point(608, 398);
+            this.btnExportCSV.Name = "btnExportCSV";
+            this.btnExportCSV.Size = new System.Drawing.Size(82, 38);
+            this.btnExportCSV.TabIndex = 15;
+            this.btnExportCSV.Text = "Export CSV";
+            this.btnExportCSV.UseVisualStyleBackColor = true;
+            this.btnExportCSV.Click += new System.EventHandler(this.btnExportCSV_Click);
             // 
             // button3
             // 
@@ -387,7 +383,7 @@ namespace Archiver_Appliance_GUI
             this.Controls.Add(this.dtFrom);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnExportCSV);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSaveTemplate);
             this.Controls.Add(this.btnLoadTemplate);
@@ -427,7 +423,7 @@ namespace Archiver_Appliance_GUI
         private System.Windows.Forms.Button btnLoadTemplate;
         private System.Windows.Forms.Button btnSaveTemplate;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnExportCSV;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.DateTimePicker dtFrom;
