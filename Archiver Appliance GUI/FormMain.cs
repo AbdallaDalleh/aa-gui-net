@@ -10,6 +10,9 @@ namespace Archiver_Appliance_GUI
     public partial class FormMain : Form
     {
         const string RequestPVsList = "http://10.1.100.9:17665/mgmt/bpl/getAllPVs?limit=-1";
+        const string RequestDataCSV = "http://10.1.100.9:17668/retrieval/data/getData.csv?pv={0}_{1}({2})&from={3}&to={4}";
+        const string DateTimeLongFormat = "hh:mm:ss dd/MM/yyyy tt";
+        const string DateTimeISOFormat = "yyyy-MM-ddThh:mm:ss.fffZ";
 
         HttpWebRequest request;
         HttpWebResponse response;
@@ -26,14 +29,15 @@ namespace Archiver_Appliance_GUI
             listData.SelectionMode = SelectionMode.MultiSimple;
             dtFrom.Value = DateTime.Now.AddHours(-1);
             dtFrom.Format = DateTimePickerFormat.Custom;
-            dtFrom.CustomFormat = "hh:mm:ss dd/MM/yyyy tt";
+            dtFrom.CustomFormat = DateTimeLongFormat;
             dtTo.Value = DateTime.Now;
             dtTo.Format = DateTimePickerFormat.Custom;
-            dtTo.CustomFormat = "hh:mm:ss dd/MM/yyyy tt";
+            dtTo.CustomFormat = DateTimeLongFormat;
             saveFileDialog.Filter = "AA Templates|*.aat";
             saveFileDialog.Title = "Save AA template";
             openFileDialog.Filter = "AA Templates|*.aat";
             openFileDialog.Title = "Load AA Template";
+            cbMethod.SelectedIndex = 0;
 
             btnNow.Click += (object s, EventArgs e) => dtTo.Value = DateTime.Now;
             btnAdd.Click += (object s, EventArgs e) => listData.Items.Add(listBuffer.SelectedItem);
@@ -58,10 +62,11 @@ namespace Archiver_Appliance_GUI
             request = (HttpWebRequest)WebRequest.Create(RequestPVsList);
             response = (HttpWebResponse)request.GetResponse();
             String content = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            List<String> list = JsonSerializer.Deserialize<List<String>>(content);
-            foreach (String item in list)
+            List<String> pvList = JsonSerializer.Deserialize<List<String>>(content);
+
+            foreach (String pv in pvList)
             {
-                listBuffer.Items.Add(item);
+                listBuffer.Items.Add(pv);
             }
         }
 
@@ -86,8 +91,8 @@ namespace Archiver_Appliance_GUI
                 {
                     template.WriteLine("pv " + item.ToString());
                 }
-                template.WriteLine("from " + dtFrom.Value.ToUniversalTime().ToString("yyyy-MM-ddThh:mm:ss.fffZ"));
-                template.WriteLine("to " + dtTo.Value.ToUniversalTime().ToString("yyyy-MM-ddThh:mm:ss.fffZ"));
+                template.WriteLine("from " + dtFrom.Value.ToUniversalTime().ToString(DateTimeISOFormat));
+                template.WriteLine("to " + dtTo.Value.ToUniversalTime().ToString(DateTimeISOFormat));
                 template.Close();
 
                 MessageBox.Show("Template " + saveFileDialog.FileName + " saved successfulyl", "Save Template", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -128,7 +133,42 @@ namespace Archiver_Appliance_GUI
 
         private void btnExportCSV_Click(object sender, EventArgs e)
         {
-            
+            if(listData.Items.Count <= 0)
+            {
+                MessageBox.Show("Empty PVs List", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if(dtFrom.Value.Ticks >= dtTo.Value.Ticks)
+            {
+                MessageBox.Show("Start time is greater than or equal to end time", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            saveFileDialog.ShowDialog();
+            if(saveFileDialog.FileName != String.Empty)
+            {
+                StreamWriter csvFile = new StreamWriter(saveFileDialog.FileName);
+                int samplingRate;
+                if (rbSeconds.Checked)
+                    samplingRate = (int)numPeriod.Value;
+                else if (rbMinutes.Checked)
+                    samplingRate = (int)numPeriod.Value * 60;
+                else
+                    samplingRate = (int)numPeriod.Value * 3600;
+
+                int requestInterval = (int)(dtTo.Value.Ticks - dtFrom.Value.Ticks) / samplingRate;
+                string samplingMethod = cbMethod.SelectedIndex == 0 ? "firstFill" : cbMethod.Text;
+
+                string url = String.Format(RequestDataCSV,
+                    samplingMethod,
+                    samplingRate,
+                    listData.Items[0], 
+                    dtFrom.Value.ToUniversalTime().ToString(DateTimeISOFormat),
+                    dtTo.Value.ToUniversalTime().ToString(DateTimeISOFormat));
+
+                MessageBox.Show(url);
+            }
         }
     }
 }

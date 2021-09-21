@@ -54,18 +54,18 @@ namespace Archiver_Appliance_GUI
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
+            this.rbSeconds = new System.Windows.Forms.RadioButton();
+            this.rbMinutes = new System.Windows.Forms.RadioButton();
+            this.rbHours = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.numPeriod = new System.Windows.Forms.NumericUpDown();
+            this.cbMethod = new System.Windows.Forms.ComboBox();
             this.btnNow = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPeriod)).BeginInit();
             this.SuspendLayout();
             // 
             // listBuffer
@@ -237,6 +237,7 @@ namespace Archiver_Appliance_GUI
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(3, 3);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(72, 19);
@@ -252,7 +253,6 @@ namespace Archiver_Appliance_GUI
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(82, 19);
             this.radioButton2.TabIndex = 23;
-            this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Starts With";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
@@ -263,7 +263,6 @@ namespace Archiver_Appliance_GUI
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(57, 19);
             this.radioButton3.TabIndex = 24;
-            this.radioButton3.TabStop = true;
             this.radioButton3.Text = "Regex";
             this.radioButton3.UseVisualStyleBackColor = true;
             // 
@@ -274,7 +273,6 @@ namespace Archiver_Appliance_GUI
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(78, 19);
             this.radioButton4.TabIndex = 25;
-            this.radioButton4.TabStop = true;
             this.radioButton4.Text = "Ends With";
             this.radioButton4.UseVisualStyleBackColor = true;
             // 
@@ -291,46 +289,45 @@ namespace Archiver_Appliance_GUI
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.radioButton5);
-            this.panel2.Controls.Add(this.radioButton6);
-            this.panel2.Controls.Add(this.radioButton7);
+            this.panel2.Controls.Add(this.rbSeconds);
+            this.panel2.Controls.Add(this.rbMinutes);
+            this.panel2.Controls.Add(this.rbHours);
             this.panel2.Location = new System.Drawing.Point(129, 387);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(213, 30);
             this.panel2.TabIndex = 27;
             // 
-            // radioButton5
+            // rbSeconds
             // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(3, 3);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(69, 19);
-            this.radioButton5.TabIndex = 22;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "Seconds";
-            this.radioButton5.UseVisualStyleBackColor = true;
+            this.rbSeconds.AutoSize = true;
+            this.rbSeconds.Checked = true;
+            this.rbSeconds.Location = new System.Drawing.Point(3, 3);
+            this.rbSeconds.Name = "rbSeconds";
+            this.rbSeconds.Size = new System.Drawing.Size(69, 19);
+            this.rbSeconds.TabIndex = 22;
+            this.rbSeconds.TabStop = true;
+            this.rbSeconds.Text = "Seconds";
+            this.rbSeconds.UseVisualStyleBackColor = true;
             // 
-            // radioButton6
+            // rbMinutes
             // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(141, 3);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(68, 19);
-            this.radioButton6.TabIndex = 25;
-            this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "Minutes";
-            this.radioButton6.UseVisualStyleBackColor = true;
+            this.rbMinutes.AutoSize = true;
+            this.rbMinutes.Location = new System.Drawing.Point(78, 3);
+            this.rbMinutes.Name = "rbMinutes";
+            this.rbMinutes.Size = new System.Drawing.Size(68, 19);
+            this.rbMinutes.TabIndex = 25;
+            this.rbMinutes.Text = "Minutes";
+            this.rbMinutes.UseVisualStyleBackColor = true;
             // 
-            // radioButton7
+            // rbHours
             // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(78, 3);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(57, 19);
-            this.radioButton7.TabIndex = 23;
-            this.radioButton7.TabStop = true;
-            this.radioButton7.Text = "Hours";
-            this.radioButton7.UseVisualStyleBackColor = true;
+            this.rbHours.AutoSize = true;
+            this.rbHours.Location = new System.Drawing.Point(152, 3);
+            this.rbHours.Name = "rbHours";
+            this.rbHours.Size = new System.Drawing.Size(57, 19);
+            this.rbHours.TabIndex = 23;
+            this.rbHours.Text = "Hours";
+            this.rbHours.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -341,21 +338,30 @@ namespace Archiver_Appliance_GUI
             this.label5.TabIndex = 28;
             this.label5.Text = "Sampling";
             // 
-            // numericUpDown1
+            // numPeriod
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(75, 387);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(48, 23);
-            this.numericUpDown1.TabIndex = 29;
+            this.numPeriod.Location = new System.Drawing.Point(75, 387);
+            this.numPeriod.Name = "numPeriod";
+            this.numPeriod.Size = new System.Drawing.Size(48, 23);
+            this.numPeriod.TabIndex = 29;
             // 
-            // comboBox1
+            // cbMethod
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(348, 387);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(92, 23);
-            this.comboBox1.TabIndex = 30;
+            this.cbMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbMethod.FormattingEnabled = true;
+            this.cbMethod.Items.AddRange(new object[] {
+            "Standard",
+            "mean",
+            "min",
+            "max",
+            "median",
+            "std",
+            "jitter",
+            "variance"});
+            this.cbMethod.Location = new System.Drawing.Point(348, 387);
+            this.cbMethod.Name = "cbMethod";
+            this.cbMethod.Size = new System.Drawing.Size(92, 23);
+            this.cbMethod.TabIndex = 30;
             // 
             // btnNow
             // 
@@ -372,8 +378,8 @@ namespace Archiver_Appliance_GUI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(786, 501);
             this.Controls.Add(this.btnNow);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.cbMethod);
+            this.Controls.Add(this.numPeriod);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -403,7 +409,7 @@ namespace Archiver_Appliance_GUI
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPeriod)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -436,12 +442,12 @@ namespace Archiver_Appliance_GUI
         private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton6;
-        private System.Windows.Forms.RadioButton radioButton7;
+        private System.Windows.Forms.RadioButton rbSeconds;
+        private System.Windows.Forms.RadioButton rbMinutes;
+        private System.Windows.Forms.RadioButton rbHours;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.NumericUpDown numPeriod;
+        private System.Windows.Forms.ComboBox cbMethod;
         private System.Windows.Forms.Button btnNow;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
